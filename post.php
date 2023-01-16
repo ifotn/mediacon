@@ -13,6 +13,10 @@
             <label for="body">Body:</label>
             <textarea name="body" id="body"></textarea>
         </fieldset>
+        <fieldset>
+            <label for="user">User:</label>
+            <input name="user" id="user" />
+        </fieldset>
         <button>Post</button>
     </form>
 </body>
