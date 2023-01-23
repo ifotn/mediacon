@@ -7,6 +7,10 @@
     <title>Post</title>
 </head>
 <body>
+    <?php 
+    //date_default_timezone_set("America/Toronto");
+    //$d = date('y-m-d h:i');
+    //echo $d; ?>
     <h1>Create a New Post</h1>
     <form action="save-post.php" method="post">
         <fieldset>

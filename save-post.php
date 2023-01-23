@@ -13,12 +13,12 @@
     $user = $_POST['user'];
 
     // calculate the date and time with php
-    $dateCreated = date("d/m/y h:i");
+    $dateCreated = date("y-m-d h:i");
     //echo $dateCreated;
     //echo $body;
 
     // connect to the db using the PDO library
-    $db = new PDO('mysql:host=172.31.22.43;dbname=Rich100', 'Rich100', 'x');
+    $db = new PDO('mysql:host=172.31.22.43;dbname=Rich100', 'Rich100', 'Vda787-KJ_');
     if ($db) {
         echo 'Connected';
     }
