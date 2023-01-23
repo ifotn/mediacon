@@ -19,7 +19,28 @@
         </fieldset>
         <fieldset>
             <label for="user">User:</label>
-            <input name="user" id="user" />
+            <select name="user" id="user">
+                <?php
+                // connect
+                $db = new PDO('mysql:host=172.31.22.43;dbname=Rich100', 'Rich100', '');
+
+                // use SELECT to fetch the users
+                $sql = "SELECT * FROM users";
+
+                // run the query
+                $cmd = $db->prepare($sql);
+                $cmd->execute();
+                $users = $cmd->fetchAll();
+
+                // loop through the user data to create a list item for each
+                foreach ($users as $user) {
+                    echo '<option>' . $user['email'] . '</option>';
+                }
+
+                // disconnect
+                $db = null;
+                ?>
+            </select>
         </fieldset>
         <button>Post</button>
     </form>
