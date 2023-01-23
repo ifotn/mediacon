@@ -1,0 +1,13 @@
+/* Google font */
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif&family=Scope+One&display=swap');
+
+body {
+    font-family: 'PT Serif', serif; 
+    font-family: 'Scope One', serif;
+}
+
+table {
+    border: solid;
+    width: 80%;
+    padding: 3px;
+}
