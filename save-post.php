@@ -5,6 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Saving your Post...</title>
+    <link rel="stylesheet" href="css/app.css" />
 </head>
 <body>
     <?php
@@ -13,36 +14,53 @@
     $user = $_POST['user'];
 
     // calculate the date and time with php
+    date_default_timezone_set("America/Toronto");
     $dateCreated = date("y-m-d h:i");
     //echo $dateCreated;
     //echo $body;
 
-    // connect to the db using the PDO library
-    $db = new PDO('mysql:host=172.31.22.43;dbname=Rich100', 'Rich100', '');
-    if ($db) {
-        echo 'Connected';
+    // lesson 4 - add validation before saving. Check 1 at a time for descriptive errors.
+    $ok = true;  // start with no validation errors
+
+    if (empty($body)) {
+        echo '<p class="error">Post body is required.</p>';
+        $ok = false; // error happened - bad data
     }
-    else {
-        echo 'Connection Failed';
+
+    if (empty($user)) {
+        echo '<p class="error">User is required.</p>';
+        $ok = false; // error happened - bad data
     }
 
-    // set up an SQL INSERT
-    $sql = "INSERT INTO posts (body, user, dateCreated) VALUES (:body, :user, :dateCreated)";
+    // only save to db if $ok has never been changed to false
+    if ($ok == true) {
+        // connect to the db using the PDO library
+        $db = new PDO('mysql:host=172.31.22.43;dbname=Rich100', 'Rich100', '');
+        /*if ($db) {
+            echo 'Connected';
+        }
+        else {
+            echo 'Connection Failed';
+        }*/
 
-    // map each input to the corresponding db column
-    $cmd = $db->prepare($sql);
-    $cmd->bindParam(':body', $body, PDO::PARAM_STR, 4000);
-    $cmd->bindParam(':user', $user, PDO::PARAM_STR, 100);
-    $cmd->bindParam(':dateCreated', $dateCreated, PDO::PARAM_STR);
+        // set up an SQL INSERT
+        $sql = "INSERT INTO posts (body, user, dateCreated) VALUES (:body, :user, :dateCreated)";
 
-    // execute the insert
-    $cmd->execute();
+        // map each input to the corresponding db column
+        $cmd = $db->prepare($sql);
+        $cmd->bindParam(':body', $body, PDO::PARAM_STR, 4000);
+        $cmd->bindParam(':user', $user, PDO::PARAM_STR, 100);
+        $cmd->bindParam(':dateCreated', $dateCreated, PDO::PARAM_STR);
 
-    // disconnect
-    $db = null;
+        // execute the insert
+        $cmd->execute();
 
-    // show the user a message
-    echo 'Post saved';
+        // disconnect
+        $db = null;
+
+        // show the user a message
+        echo 'Post saved';
+    }
     ?>
 </body>
 </html>

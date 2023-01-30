@@ -11,3 +11,8 @@ table {
     width: 80%;
     padding: 3px;
 }
+
+.error {
+    font-weight: bold;
+    color: #AD1513;
+}

@@ -15,7 +15,7 @@
     <form action="save-post.php" method="post">
         <fieldset>
             <label for="body">Body:</label>
-            <textarea name="body" id="body"></textarea>
+            <textarea name="body" id="body" required maxlength="4000"></textarea>
         </fieldset>
         <fieldset>
             <label for="user">User:</label>
