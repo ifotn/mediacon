@@ -22,7 +22,7 @@
             <select name="user" id="user">
                 <?php
                 // connect
-                $db = new PDO('mysql:host=172.31.22.43;dbname=Rich100', 'Rich100', 'Vda787-KJ_');
+                $db = new PDO('mysql:host=172.31.22.43;dbname=Rich100', 'Rich100', 'x');
 
                 // use SELECT to fetch the users
                 $sql = "SELECT * FROM users";

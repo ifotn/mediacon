@@ -35,7 +35,7 @@
     // only save to db if $ok has never been changed to false
     if ($ok == true) {
         // connect to the db using the PDO library
-        $db = new PDO('mysql:host=172.31.22.43;dbname=Rich100', 'Rich100', 'Vda787-KJ_');
+        $db = new PDO('mysql:host=172.31.22.43;dbname=Rich100', 'Rich100', '');
         /*if ($db) {
             echo 'Connected';
         }
