@@ -1,5 +1,18 @@
+@charset "UTF-8";
+
 /* Google font */
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif&family=Scope+One&display=swap');
+
+/* variables for palette from https://www.materialpalette.com/teal/teal */
+:root {
+    --dark-primary-color: #00796B;
+    --light-primary-color: #B2DFDB;
+    --primary-color: #009688;
+    --text-and-icons: #FFFFFF;
+    --primary-text: #212121;
+    --secondary-text: #757575;
+    --divider-colour: #BDBDBD;
+}
 
 body, select, button {
     font-family: 'PT Serif', serif; 
