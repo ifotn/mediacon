@@ -5,6 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Post</title>
+    <!-- normalize to remove browser default styles -->
+    <link rel="stylesheet" href="css/normalize.css" />
+    <!-- our custom css -->
+    <link rel="stylesheet" href="css/app.css" />
 </head>
 <body>
     <?php 
@@ -22,7 +26,7 @@
             <select name="user" id="user">
                 <?php
                 // connect
-                $db = new PDO('mysql:host=172.31.22.43;dbname=Rich100', 'Rich100', 'x');
+                $db = new PDO('mysql:host=172.31.22.43;dbname=Rich100', 'Rich100', '');
 
                 // use SELECT to fetch the users
                 $sql = "SELECT * FROM users";
@@ -42,7 +46,7 @@
                 ?>
             </select>
         </fieldset>
-        <button>Post</button>
+        <button class="btnOffset">Post</button>
     </form>
 </body>
 </html>

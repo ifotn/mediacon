@@ -1,7 +1,7 @@
 /* Google font */
 @import url('https://fonts.googleapis.com/css2?family=PT+Serif&family=Scope+One&display=swap');
 
-body {
+body, select, button {
     font-family: 'PT Serif', serif; 
     font-family: 'Scope One', serif;
 }
@@ -15,4 +15,28 @@ table {
 .error {
     font-weight: bold;
     color: #AD1513;
+}
+
+article {
+    border: 1px solid;
+    padding: 5px;
+    margin: 5px;
+}
+
+fieldset {
+    border: none;
+}
+
+textarea {
+    width: 50%;
+    height: 100px;
+}
+
+label {
+    width: 100px;
+    display: inline-block;
+}
+
+.btnOffset {
+    margin-left: 118px;
 }
