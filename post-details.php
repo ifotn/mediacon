@@ -11,42 +11,58 @@
     <link rel="stylesheet" href="css/app.css" />
 </head>
 <body>
-    <?php 
-    //date_default_timezone_set("America/Toronto");
-    //$d = date('y-m-d h:i');
-    //echo $d; ?>
-    <h1>Create a New Post</h1>
-    <form action="save-post.php" method="post">
-        <fieldset>
-            <label for="body">Body:</label>
-            <textarea name="body" id="body" required maxlength="4000"></textarea>
-        </fieldset>
-        <fieldset>
-            <label for="user">User:</label>
-            <select name="user" id="user">
-                <?php
-                // connect
-                $db = new PDO('mysql:host=172.31.22.43;dbname=Rich100', 'Rich100', '');
+    <header>
+        <h1>
+            <a href="#">
+                MediaCon
+            </a>
+        </h1>
+        <nav>
+            <ul>
+                <li><a href="posts.php">Posts</a></li>
+                <li><a href="register.php">Register</a></li>
+                <li><a href="login.php">Login</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main>
+        <?php 
+        //date_default_timezone_set("America/Toronto");
+        //$d = date('y-m-d h:i');
+        //echo $d; ?>
+        <h1>Create a New Post</h1>
+        <form action="save-post.php" method="post">
+            <fieldset>
+                <label for="body">Body:</label>
+                <textarea name="body" id="body" required maxlength="4000"></textarea>
+            </fieldset>
+            <fieldset>
+                <label for="user">User:</label>
+                <select name="user" id="user">
+                    <?php
+                    // connect
+                    $db = new PDO('mysql:host=172.31.22.43;dbname=Rich100', 'Rich100', '');
 
-                // use SELECT to fetch the users
-                $sql = "SELECT * FROM users";
+                    // use SELECT to fetch the users
+                    $sql = "SELECT * FROM users";
 
-                // run the query
-                $cmd = $db->prepare($sql);
-                $cmd->execute();
-                $users = $cmd->fetchAll();
+                    // run the query
+                    $cmd = $db->prepare($sql);
+                    $cmd->execute();
+                    $users = $cmd->fetchAll();
 
-                // loop through the user data to create a list item for each
-                foreach ($users as $user) {
-                    echo '<option>' . $user['email'] . '</option>';
-                }
+                    // loop through the user data to create a list item for each
+                    foreach ($users as $user) {
+                        echo '<option>' . $user['email'] . '</option>';
+                    }
 
-                // disconnect
-                $db = null;
-                ?>
-            </select>
-        </fieldset>
-        <button class="btnOffset">Post</button>
-    </form>
+                    // disconnect
+                    $db = null;
+                    ?>
+                </select>
+            </fieldset>
+            <button class="btnOffset">Post</button>
+        </form>
+    </main>
 </body>
 </html>
