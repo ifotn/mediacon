@@ -78,12 +78,17 @@ h2 {
 
 main {
     margin: 100px auto;
-    padding: 20px;
+    padding: 30px;
 }
 
 a {
     text-decoration: none;
     font-weight: bold;
+    color: var(--dark-primary-color);
+}
+
+a:hover {
+    text-decoration: underline;
 }
 
 /* header & nav */
@@ -114,17 +119,31 @@ header a:link {
 
 header nav ul {
     list-style-type: none;
-    /*position: fixed;
+    position: fixed;
     left: 100%;
     top: 0;
     width: 100%;
-    height: 100%; */
+    height: 100%; 
     margin: 0;
     padding: 10px;
     transition: left 0.1s;
+    position: static;
+    background-color: transparent;
+}
+
+header nav li {
+    display: inline-block;
 }
 
 header nav ul a {
     display: block;
     padding: 10px;
+}
+
+header a:visited {
+    color: var(--text-and-icons);
+}
+
+header a:hover {
+    color: var(--divider-colour);
 }
