@@ -29,6 +29,10 @@
         <?php 
         // get the postId from the url parameter using $_GET
         $postId = $_GET['postId'];
+        if (empty($postId)) {
+            header('location:404.php');
+            exit();
+        }
 
         // connect - we can re-use for the 2nd query later
         $db = new PDO('mysql:host=172.31.22.43;dbname=Rich100', 'Rich100', '');
@@ -39,6 +43,12 @@
         $cmd->bindParam(':postId', $postId, PDO::PARAM_INT);
         $cmd->execute();
         $post = $cmd->fetch();
+
+        // check query returned a valid post record
+        if (empty($post)) {
+            header('location:404.php');
+            exit();
+        }
 
         ?>
         <h1>Post Details</h1>
@@ -53,8 +63,6 @@
                 <label for="user">User:</label>
                 <select name="user" id="user">
                     <?php
-                    
-
                     // use SELECT to fetch the users
                     $sql = "SELECT * FROM users";
 
@@ -65,7 +73,13 @@
 
                     // loop through the user data to create a list item for each
                     foreach ($users as $user) {
-                        echo '<option>' . $user['email'] . '</option>';
+                        // select the user that made the current post
+                        if ($post['user'] == $user['email']) {
+                            echo '<option selected>' . $user['email'] . '</option>';
+                        }
+                        else {
+                            echo '<option>' . $user['email'] . '</option>';
+                        }                       
                     }
 
                     // disconnect
@@ -78,6 +92,7 @@
                 <?php echo $post['dateCreated']; ?>
             </fieldset>
             <button class="btnOffset">Update</button>
+            <input name="postId" id="postId" value="<?php echo $postId; ?>" type="hidden" />
         </form>
     </main>
 </body>
