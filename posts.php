@@ -10,8 +10,9 @@
     <link rel="stylesheet" href="css/normalize.css" />
     <!-- our custom css -->
     <link rel="stylesheet" href="css/app.css" />
+    <!-- our custom js -->
+    <script src="js/scripts.js" defer></script>
 </head>
-
 <body>
     <header>
         <h1>
@@ -53,7 +54,10 @@
             <h2>' . $post['user'] . '</h2>
             <p>' . $post['dateCreated'] . '</p>
             <p>' . $post['body'] . '</p>
-            <a href="delete-post.php">Delete</a>
+            <a href="edit-post.php?postId=' . $post['postId'] . '">Edit</a>
+            <a onclick="return confirmDelete();"
+             href="delete-post.php?postId=' . $post['postId'] .'
+            ">Delete</a>
             </article>';
 
             /*echo '<tr>
