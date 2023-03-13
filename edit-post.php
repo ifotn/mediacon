@@ -70,5 +70,4 @@ require('shared/header.php');
             <input name="postId" id="postId" value="<?php echo $postId; ?>" type="hidden" />
         </form>
     </main>
-</body>
-</html>
+<?php require('shared/footer.php'); ?>

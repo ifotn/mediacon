@@ -41,5 +41,4 @@ require('shared/header.php');
             <button class="btnOffset">Post</button>
         </form>
     </main>
-</body>
-</html>
+<?php require('shared/footer.php'); ?>

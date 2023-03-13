@@ -48,6 +48,4 @@ require('shared/header.php');
         $db = null;
         ?>
     </main>
-</body>
-
-</html>
+<?php require('shared/footer.php'); ?>
