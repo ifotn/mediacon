@@ -4,29 +4,34 @@ require('shared/header.php');
 ?>
     <main>
         <?php 
-        // get the postId from the url parameter using $_GET
-        $postId = $_GET['postId'];
-        if (empty($postId)) {
-            header('location:404.php');
+        try {
+            // get the postId from the url parameter using $_GET
+            $postId = $_GET['postId'];
+            if (empty($postId)) {
+                header('location:404.php');
+                exit();
+            }
+
+            // connect - we can re-use for the 2nd query later
+            require('shared/db.php');
+
+            // set up & run SQL query to fetch the selected post record.  fetch for 1 record only
+            $sql = "SELECT * FROM posts WHERE postId = :postId";
+            $cmd = $db->prepare($sql);
+            $cmd->bindParam(':postId', $postId, PDO::PARAM_INT);
+            $cmd->execute();
+            $post = $cmd->fetch();
+
+            // check query returned a valid post record
+            if (empty($post)) {
+                header('location:404.php');
+                exit();
+            }
+        }
+        catch (Exception $error) {
+            header('location:error.php');
             exit();
         }
-
-        // connect - we can re-use for the 2nd query later
-        require('shared/db.php');
-
-        // set up & run SQL query to fetch the selected post record.  fetch for 1 record only
-        $sql = "SELECT * FROM posts WHERE postId = :postId";
-        $cmd = $db->prepare($sql);
-        $cmd->bindParam(':postId', $postId, PDO::PARAM_INT);
-        $cmd->execute();
-        $post = $cmd->fetch();
-
-        // check query returned a valid post record
-        if (empty($post)) {
-            header('location:404.php');
-            exit();
-        }
-
         ?>
         <h1>Post Details</h1>
         <form action="update-post.php" method="post">

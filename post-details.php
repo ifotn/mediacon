@@ -17,24 +17,30 @@ require('shared/header.php');
                 <label for="user">User:</label>
                 <select name="user" id="user">
                     <?php
-                    // connect
-                    require('shared/db.php');
+                    try {
+                        // connect
+                        require('shared/db.php');
 
-                    // use SELECT to fetch the users
-                    $sql = "SELECT * FROM users";
+                        // use SELECT to fetch the users
+                        $sql = "SELECT * FROM users";
 
-                    // run the query
-                    $cmd = $db->prepare($sql);
-                    $cmd->execute();
-                    $users = $cmd->fetchAll();
+                        // run the query
+                        $cmd = $db->prepare($sql);
+                        $cmd->execute();
+                        $users = $cmd->fetchAll();
 
-                    // loop through the user data to create a list item for each
-                    foreach ($users as $user) {
-                        echo '<option>' . $user['email'] . '</option>';
+                        // loop through the user data to create a list item for each
+                        foreach ($users as $user) {
+                            echo '<option>' . $user['email'] . '</option>';
+                        }
+
+                        // disconnect
+                        $db = null;
                     }
-
-                    // disconnect
-                    $db = null;
+                    catch (Exception $error) {
+                        header('location:error.php');
+                        exit();
+                    }
                     ?>
                 </select>
             </fieldset>
