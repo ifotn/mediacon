@@ -6,7 +6,7 @@
 $postId = $_GET['postId'];
 
 // connect to db
-$db = new PDO('mysql:host=172.31.22.43;dbname=Rich100', 'Rich100', '');
+require('shared/db.php');
 
 // create SQL delete statement
 $sql = "DELETE FROM posts WHERE postId = :postId";
