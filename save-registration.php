@@ -42,25 +42,38 @@
         // connect
         require('shared/db.php');
 
-        // set up SQL insert
-        $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
-
-        // set up and fill the parameter values for safety
+        // duplicate check
+        $sql = "SELECT * FROM users WHERE username = :username";
         $cmd = $db->prepare($sql);
         $cmd->bindParam(':username', $username, PDO::PARAM_STR, 50);
-
-        // hash the password before binding it to the :password parameter
-        $password = password_hash($password, PASSWORD_DEFAULT);
-        $cmd->bindParam(':password', $password, PDO::PARAM_STR, 255);
-
-        // execute the sql command
         $cmd->execute();
+        $user = $cmd->fetch();
+
+        // only create a new user if the query for this username returns no data
+        if (empty($user)) {
+            // set up SQL insert
+            $sql = "INSERT INTO users (username, password) VALUES (:username, :password)";
+
+            // set up and fill the parameter values for safety
+            $cmd = $db->prepare($sql);
+            $cmd->bindParam(':username', $username, PDO::PARAM_STR, 50);
+
+            // hash the password before binding it to the :password parameter
+            $password = password_hash($password, PASSWORD_DEFAULT);
+            $cmd->bindParam(':password', $password, PDO::PARAM_STR, 255);
+
+            // execute the sql command
+            $cmd->execute();
+            
+            // show confirmation
+            echo 'Your Registration was Successful!';
+        }
+        else {
+            echo '<p class="error">User already exists.</p>';
+        }
 
         // disconnect
-        $db = null;
-
-        // show confirmation
-        echo 'Your Registration was Successful!';
+        $db = null;        
     }
         
     ?>
