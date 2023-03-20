@@ -28,7 +28,11 @@ else {
     else {
         // if both credentials found, store the user identity in the $_SESSION object as a var
         // redirect to posts feed
-
+        // *** code dictation lines go here ***
+        session_start(); // access the current session automatically created on the web server
+        $_SESSION['user'] = $username;
+        header('location:posts.php');
+        $db = null;
     }
 }
 ?>
