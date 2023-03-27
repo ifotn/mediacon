@@ -4,8 +4,10 @@ require('shared/header.php');
 ?>
     <main>
         <h1>Posts</h1>
-        <a href="post-details.php">Add a New Post</a>
-        <?php
+        <?php        
+        if (!empty($_SESSION['user'])) {
+            echo '<a href="post-details.php">Add a New Post</a>';
+        }        
         try {
             // connect to db
             require('shared/db.php');
@@ -28,12 +30,19 @@ require('shared/header.php');
                 echo '<article>
                 <h2>' . $post['user'] . '</h2>
                 <p>' . $post['dateCreated'] . '</p>
-                <p>' . $post['body'] . '</p>
-                <a href="edit-post.php?postId=' . $post['postId'] . '">Edit</a>
-                <a onclick="return confirmDelete();"
-                href="delete-post.php?postId=' . $post['postId'] .'
-                ">Delete</a>
-                </article>';
+                <p>' . $post['body'] . '</p>';
+
+                // access check. 1 - is user logged in?  2. does user own this post?
+                if (!empty($_SESSION['user'])) {
+                    if ($post['user'] == $_SESSION['user']) {
+                        echo '<a href="edit-post.php?postId=' . $post['postId'] . '">Edit</a>
+                        <a onclick="return confirmDelete();"
+                        href="delete-post.php?postId=' . $post['postId'] .'
+                        ">Delete</a>';
+                    }
+                }                 
+                    
+                echo '</article>';
 
                 /*echo '<tr>
                 <td>' . $post['body'] . '</td>
