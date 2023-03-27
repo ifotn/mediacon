@@ -1,4 +1,5 @@
 <?php
+require('shared/auth.php');
 try {
     // no html required as this is an invisible page
     // it deletes the post then redirects to the updated feed
@@ -8,6 +9,24 @@ try {
 
     // connect to db
     require('shared/db.php');
+
+    // access control check: does the current user own this post?
+    $sql = "SELECT * FROM posts WHERE postId = :postId";
+    $cmd = $db->prepare($sql);
+
+    // populate the SQL with the selected postId
+    $cmd->bindParam(':postId', $postId, PDO::PARAM_INT);
+
+    // execute query in the database
+    $cmd->execute();
+    $post = $cmd->fetch();
+
+    // ownership check
+    if ($post['user'] != $_SESSION['user']) {
+        $db = null;
+        header('location:403.php'); // forbidden
+        exit();
+    }
 
     // create SQL delete statement
     $sql = "DELETE FROM posts WHERE postId = :postId";

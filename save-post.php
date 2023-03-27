@@ -1,3 +1,7 @@
+<?php
+// auth check
+require('shared/auth.php');
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,7 +32,7 @@
         try {
             // capture the form body input using the $_POST array & store in a var
             $body = $_POST['body'];
-            $user = $_POST['user'];
+            $user = $_SESSION['user']; //$_POST['user'];
 
             // calculate the date and time with php
             date_default_timezone_set("America/Toronto");

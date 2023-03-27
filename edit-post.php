@@ -1,4 +1,6 @@
 <?php
+require('shared/auth.php');
+
 $title = 'Edit your Post';
 require('shared/header.php');
 ?>
@@ -27,6 +29,12 @@ require('shared/header.php');
                 header('location:404.php');
                 exit();
             }
+
+            // access control check: is logged user the owner of this post?
+            if ($post['user'] != $_SESSION['user']) {
+                header('location:403.php');  // 403 = HTTP Forbidden Error
+                exit();
+            }
         }
         catch (Exception $error) {
             header('location:error.php');
@@ -38,34 +46,6 @@ require('shared/header.php');
             <fieldset>
                 <label for="body">Body:</label>
                 <textarea name="body" id="body" required maxlength="4000"><?php echo $post['body']; ?></textarea>
-            </fieldset>
-            <fieldset>
-                <label for="user">User:</label>
-                <select name="user" id="user">
-                    <?php
-                    // use SELECT to fetch the users
-                    $sql = "SELECT * FROM users";
-
-                    // run the query
-                    $cmd = $db->prepare($sql);
-                    $cmd->execute();
-                    $users = $cmd->fetchAll();
-
-                    // loop through the user data to create a list item for each
-                    foreach ($users as $user) {
-                        // select the user that made the current post
-                        if ($post['user'] == $user['email']) {
-                            echo '<option selected>' . $user['email'] . '</option>';
-                        }
-                        else {
-                            echo '<option>' . $user['email'] . '</option>';
-                        }                       
-                    }
-
-                    // disconnect
-                    $db = null;
-                    ?>
-                </select>
             </fieldset>
             <fieldset>
                 <label>Date Created:</label>
