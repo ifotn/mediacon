@@ -28,8 +28,17 @@
     $type = mime_content_type($tmp_name);
     echo 'Type: ' . $type . '<br />';
 
+    // use the session object to create a unique name. eg. photo1.png => as98df723-photo1.png
+    session_start();
+    $name = session_id() . '-' . $name;
+
     // move file to uploads folder
     move_uploaded_file($tmp_name, 'uploads/'. $name);
+
+    // show the caption entered by the user in the form
+    $caption = $_POST['caption'];
+    echo 'Caption: ' . $caption . '<br />';
+
     ?>
 </body>
 </html>
