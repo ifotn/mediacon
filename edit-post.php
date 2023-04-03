@@ -42,7 +42,7 @@ require('shared/header.php');
         }
         ?>
         <h1>Post Details</h1>
-        <form action="update-post.php" method="post">
+        <form action="update-post.php" method="post" enctype="multipart/form-data">
             <fieldset>
                 <label for="body">Body:</label>
                 <textarea name="body" id="body" required maxlength="4000"><?php echo $post['body']; ?></textarea>
@@ -51,8 +51,18 @@ require('shared/header.php');
                 <label>Date Created:</label>
                 <?php echo $post['dateCreated']; ?>
             </fieldset>
+            <fieldset>
+                <label for="photo">Photo:</label>
+                <input type="file" name="photo" accept=".png,.jpg" />
+            </fieldset>
+            <?php
+            if (!empty($post['photo'])) {
+                echo '<img src="img/' . $post['photo'] . '" alt="Post Photo" />';
+            }
+            ?>
             <button class="btnOffset">Update</button>
             <input name="postId" id="postId" value="<?php echo $postId; ?>" type="hidden" />
+            <input name="currentPhoto" value="<?php echo $post['photo']; ?>" type="hidden" />
         </form>
     </main>
 <?php require('shared/footer.php'); ?>

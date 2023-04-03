@@ -28,11 +28,12 @@ require('shared/auth.php');
     </header>
     <main>
         <?php
-        try {
+        //try {
             // capture the form body input using the $_POST array & store in a var
             $body = $_POST['body'];
             $user = $_SESSION['user']; //$_POST['user'];
             $postId = $_POST['postId']; // hidden input w/PK
+            $photo = $_FILES['photo']; // uploaded file if any
 
             // calculate the date and time with php
             date_default_timezone_set("America/Toronto");
@@ -53,6 +54,26 @@ require('shared/auth.php');
                 $ok = false; // error happened - bad data
             }
 
+            // if a photo was uploaded, validate & save it 
+            if (!empty($photo['name'])) {
+                $tmp_name = $photo['tmp_name'];
+                
+                // ensure file is jpg or png
+                $type = mime_content_type($tmp_name);
+                if ($type != 'image/png' && $type != 'image/jpeg') {
+                    echo 'Please upload a .png or .jpg';
+                    $ok = false;
+                }
+
+                // create a unique name and save the photo
+                $name = session_id() . '-' . $photo['name'];
+                move_uploaded_file($tmp_name, 'img/' . $name);
+            }
+            else {
+                // no new photo uploaded, keep current photo name
+                $name = $_POST['currentPhoto'];
+            }
+
             // only save to db if $ok has never been changed to false
             if ($ok == true) {
                 // connect to the db using the PDO library
@@ -65,8 +86,8 @@ require('shared/auth.php');
             }*/
 
                 // set up an SQL UPDATE.  We MUST HAVE A WHERE CLAUSE
-                $sql = "UPDATE posts SET body = :body, user = :user, dateCreated = :dateCreated
-                WHERE postId = :postId";
+                $sql = "UPDATE posts SET body = :body, user = :user, 
+                dateCreated = :dateCreated, photo = :photo WHERE postId = :postId";
 
                 // map each input to the corresponding db column
                 $cmd = $db->prepare($sql);
@@ -74,6 +95,7 @@ require('shared/auth.php');
                 $cmd->bindParam(':user', $user, PDO::PARAM_STR, 100);
                 $cmd->bindParam(':dateCreated', $dateCreated, PDO::PARAM_STR);
                 $cmd->bindParam(':postId', $postId, PDO::PARAM_INT);
+                $cmd->bindParam(':photo', $name, PDO::PARAM_STR, 100);
 
                 // execute the insert
                 $cmd->execute();
@@ -85,11 +107,11 @@ require('shared/auth.php');
                 echo '<h1>Post Updated</h1>
                     <p><a href="posts.php">See the updated feed</a></p>';
             }
-        }
+       /* }
         catch (Exception $error) {
             header('location:error.php');
             exit();
-        }
+        } */
         ?>
     </main>
 </body>
