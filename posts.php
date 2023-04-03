@@ -45,6 +45,10 @@ require('shared/header.php');
                 <p>' . $post['dateCreated'] . '</p>
                 <p>' . $post['body'] . '</p>';
 
+                if (!empty($post['photo'])) {
+                    echo '<img src="img/' . $post['photo'] . '" alt="Post Photo" />';
+                }
+
                 // access check. 1 - is user logged in?  2. does user own this post?
                 if (!empty($_SESSION['user'])) {
                     if ($post['user'] == $_SESSION['user']) {
