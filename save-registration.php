@@ -38,6 +38,23 @@
         $ok = false;
     }
 
+    // recaptcha v3 anti-spam validation
+    // set up the input params to call the Google API
+    $apiUrl = 'https://www.google.com/recaptcha/api/siteverify';
+    $secret = '6LejQHUlAAAAAC8mIhyROT08FmPSkjcpf_yw-E8G';
+    $response = $_POST['g-recaptcha-response'];
+
+    // call the api and parse the json-formatted results
+    $apiResponse = file_get_contents("$apiUrl?secret=$secret&response=$response");
+    // converts json string into an array we can parse
+    $decodedResponse = json_decode($apiResponse);
+    if ($decodedResponse->success == false) {
+        echo 'Are you human?';
+        $ok = false;
+    }
+    //print($apiResponse); // for testing only
+    //exit(); // for testing only
+
     if ($ok == true) {
         // connect
         require('shared/db.php');

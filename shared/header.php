@@ -15,7 +15,7 @@
 <body>
     <header>
         <h1>
-            <a href="#">
+            <a href="index.php">
                 MediaCon
             </a>
         </h1>
